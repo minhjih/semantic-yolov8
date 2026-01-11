@@ -21,6 +21,7 @@ CONFIG = {
     'split_layer': 4,              # 앞에서부터 몇번째 layer를 기준으로 나눌지          
     'compression_ratio': 4,        # student model의 압축률
     'student_layer_num': 3,        # student model의 layer 수
+    'epochs': 100,                 # 학습 횟수
     'batch_size': 8,               # [수정] 16 -> 8 (OOM 방지)
     'lr': 1e-3,
     'device': 'cuda' if torch.cuda.is_available() else 'cpu',
@@ -177,7 +178,7 @@ def main():
 
     print(">>> Start Training with AMP...")
     
-    for epoch in range(5):
+    for epoch in range(CONFIG['epochs']):
         total_epoch_loss = 0.0
         
         for i, imgs in enumerate(dataloader):

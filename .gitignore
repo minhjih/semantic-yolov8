@@ -2,3 +2,4 @@
 *.pt
 model/*
 data/*
+.env

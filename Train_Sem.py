@@ -23,7 +23,10 @@ CONFIG = {
     'epochs': 100,
     'compression_ratio': 8,
     'device': 'cuda' if torch.cuda.is_available() else 'cpu',
-    'img_size': 640
+    'img_size': 640,
+    'lambda_p3': 1.0,
+    'lambda_p4': 1.0,
+    'lambda_p5': 1.0
 }
 
 # ==========================================
@@ -186,7 +189,7 @@ def main():
                 loss_p3 = criterion(student_features['P3'], target_features['P3'])
                 loss_p4 = criterion(student_features['P4'], target_features['P4'])
                 loss_p5 = criterion(student_features['P5'], target_features['P5'])
-                total_loss = loss_p3 + loss_p4 + loss_p5
+                total_loss = CONFIG['lambda_p3'] * loss_p3 + CONFIG['lambda_p4'] * loss_p4 + CONFIG['lambda_p5'] * loss_p5
 
             # [AMP] Backward
             scaler.scale(total_loss).backward()
